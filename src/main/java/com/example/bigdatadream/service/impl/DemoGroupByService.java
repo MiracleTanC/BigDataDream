@@ -52,9 +52,12 @@ public class DemoGroupByService extends BaseJob implements IProcessService {
             }).map(n -> {
                 Map<String, Integer> it = new HashMap<>();
                 int i = 0;
-                while (n._2().iterator().hasNext()){
+                for (String s : n._2()) {
                     i++;
                 }
+//                while (n._2().iterator().hasNext()){
+//                    i++;
+//                }
                 it.put(n._1(), i);
                 return it;
             });

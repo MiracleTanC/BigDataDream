@@ -1,9 +1,6 @@
 package com.example.bigdatadream;
 
-import com.example.bigdatadream.service.impl.DemoFlatMapService;
-import com.example.bigdatadream.service.impl.DemoGlomService;
-import com.example.bigdatadream.service.impl.DemoGroupByService;
-import com.example.bigdatadream.service.impl.WordCountService;
+import com.example.bigdatadream.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +17,8 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoGlomService demoGlomService;
     @Autowired
     private DemoGroupByService demoGroupByService;
+    @Autowired
+    private DemoFilterService demoFilterService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
@@ -29,6 +28,7 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //wordCountService.process();
         //demoFlatMapService.process();
         //demoGlomService.process();
-        demoGroupByService.process();
+        //demoGroupByService.process();
+        demoFilterService.process();
     }
 }
