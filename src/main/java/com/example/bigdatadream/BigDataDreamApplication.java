@@ -21,6 +21,8 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoFilterService demoFilterService;
     @Autowired
     private DemoSampleService demoSampleService;
+    @Autowired
+    private DemoDistinctService demoDistinctService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
@@ -32,6 +34,7 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoGlomService.process();
         //demoGroupByService.process();
         //demoFilterService.process();
-        demoSampleService.process();
+        //demoSampleService.process();
+        demoDistinctService.process();
     }
 }
