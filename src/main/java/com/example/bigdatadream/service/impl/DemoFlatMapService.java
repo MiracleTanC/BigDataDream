@@ -22,14 +22,10 @@ public class DemoFlatMapService extends BaseJob implements IProcessService {
     @Override
     public void process() {
         JavaSparkContext sc = initSpark("flatmapDemo");
-        List<Object> data = new ArrayList<>();
         List<Integer> data1 = Arrays.asList(1, 2, 3);
         List<String> data2 = Arrays.asList("i am a superman", "you are superwomen");
-        data.add(data1);
-        data.add(data2);
-        data.add(4);
         JavaRDD<Integer> rddData1 = sc.parallelize(data1);
-        JavaRDD<Object> parallelizeData = sc.parallelize(data);
+
 //        JavaRDD<Integer> uJavaRDD1 = rddData1.flatMap(new FlatMapFunction<Integer, Integer>() {
 //            @Override
 //            public Iterator<Integer> call(Integer integer) throws Exception {
@@ -67,7 +63,6 @@ public class DemoFlatMapService extends BaseJob implements IProcessService {
             return list.iterator();
         });
         System.out.println(uJavaRDD2.collect());
-
         //读取本地文件,读文件时flatMap是按行读取。
         URL resource = this.getClass().getClassLoader().getResource("data/city_info.txt");
         if (resource != null) {
@@ -75,15 +70,12 @@ public class DemoFlatMapService extends BaseJob implements IProcessService {
             JavaRDD<String> fileRDD = sc.textFile(filePath);
             JavaRDD<Map<String, String>> mapJavaRDD = fileRDD.flatMap(n -> {
                 List<Map<String, String>> ds = new ArrayList<>();
-                String[] cityInfo = n.split("\n");
-                for (String item : cityInfo) {
-                    String[] crr = item.split("\t");
-                    Map<String, String> mp = new HashMap<>();
-                    String key = crr[2];
-                    String value = crr[1];
-                    mp.put(key, value);
-                    ds.add(mp);
-                }
+                String[] crr = n.split("\t");
+                Map<String, String> mp = new HashMap<>();
+                String key = crr[2];
+                String value = crr[1];
+                mp.put(key, value);
+                ds.add(mp);
                 return ds.iterator();
             });
             System.out.println(mapJavaRDD.collect());
