@@ -37,7 +37,7 @@ import java.util.*;
 public class DemoMapPartitionsService extends BaseJob implements IProcessService {
     @Override
     public void process() {
-        JavaSparkContext sc = initSpark("map");
+        JavaSparkContext sc = initSpark("mapPartitions");
         List<Integer> data = Arrays.asList(new Integer[]{1, 2, 3, 4,5,6,7});
         JavaRDD<Integer> dataRdd1 = sc.parallelize(data,2);
         JavaRDD<Integer> integerJavaRDD = dataRdd1.mapPartitions(n->{

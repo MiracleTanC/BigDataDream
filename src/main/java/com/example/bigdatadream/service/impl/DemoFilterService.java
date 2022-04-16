@@ -16,7 +16,7 @@ public class DemoFilterService extends BaseJob implements IProcessService {
      */
     @Override
     public void process() {
-        JavaSparkContext sc = initSpark("glomDemo");
+        JavaSparkContext sc = initSpark("FilterDemo");
         List<Integer> data = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         //指定3个分区
         JavaRDD<Integer> rddData = sc.parallelize(data);

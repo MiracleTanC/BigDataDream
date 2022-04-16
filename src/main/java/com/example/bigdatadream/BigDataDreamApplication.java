@@ -27,6 +27,8 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoSampleService demoSampleService;
     @Autowired
     private DemoDistinctService demoDistinctService;
+    @Autowired
+    private DemoCoalesceService demoCoalesceService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
@@ -41,6 +43,7 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoFilterService.process();
         //demoSampleService.process();
         //demoDistinctService.process();
-        demoMapPartitionsService.process();
+        //demoMapPartitionsService.process();
+        demoCoalesceService.process();
     }
 }
