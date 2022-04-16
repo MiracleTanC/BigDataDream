@@ -53,6 +53,12 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoCombineByKeyService demoCombineByKeyService;
     @Autowired
     private DemoSortByKeyService demoSortByKeyService;
+    @Autowired
+    private DemoJoinService demoJoinService;
+    @Autowired
+    private DemoLeftOuterJoinService demoLeftOuterJoinService;
+    @Autowired
+    private DemoCoGroupService demoCoGroupService;
 
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
@@ -81,6 +87,9 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoAggregateByKeyService.process();
         //demoFoldByKeyService.process();
         //demoCombineByKeyService.process();
-        demoSortByKeyService.process();
+        //demoSortByKeyService.process();
+        //demoJoinService.process();
+        //demoLeftOuterJoinService.process();
+        demoCoGroupService.process();
     }
 }
