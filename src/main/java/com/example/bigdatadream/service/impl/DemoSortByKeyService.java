@@ -22,13 +22,16 @@ public class DemoSortByKeyService extends BaseJob implements IProcessService {
         JavaPairRDD<String, Integer> sjrdd2 = sc.parallelizePairs(data2);
         JavaPairRDD<String, Integer> rss = sjrdd2.sortByKey();// asc true false
         System.out.println(rss.collect());
-        JavaPairRDD<String, Integer> rss2 = sjrdd2.sortByKey(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return 0;
-            }
-        });// asc true false
-        System.out.println(rss.collect());
+//        JavaPairRDD<String, Integer> rss2 = sjrdd2.sortByKey(new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return 0;
+//            }
+//        });// asc true false
+        //按值排序
+        JavaPairRDD<String, Integer> rss2 = sjrdd2.mapToPair(n->new Tuple2<Integer,String>(n._2,n._1))
+                .sortByKey(false).mapToPair(n->new Tuple2<String,Integer>(n._2,n._1));
+        System.out.println(rss2.collect());
         sc.close();
     }
 }
