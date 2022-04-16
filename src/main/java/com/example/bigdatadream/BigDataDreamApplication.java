@@ -41,6 +41,10 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoZipService demoZipService;
     @Autowired
     private DemoPartitionByService demoPartitionByService;
+    @Autowired
+    private DemoReduceByKeyService demoReduceByKeyService;
+    @Autowired
+    private DemoGroupByKeyService demoGroupByKeyService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
@@ -62,6 +66,8 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoUnionService.process();
         //demoSubtractService.process();
         //demoZipService.process();
-        demoPartitionByService.process();
+        //demoPartitionByService.process();
+        //demoReduceByKeyService.process();
+        demoGroupByKeyService.process();
     }
 }
