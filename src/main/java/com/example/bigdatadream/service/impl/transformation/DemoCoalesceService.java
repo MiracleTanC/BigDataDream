@@ -1,6 +1,7 @@
-package com.example.bigdatadream.service.impl;
+package com.example.bigdatadream.service.impl.transformation;
 
 import com.example.bigdatadream.service.IProcessService;
+import com.example.bigdatadream.service.impl.BaseJob;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.springframework.stereotype.Service;

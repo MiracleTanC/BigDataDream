@@ -1,12 +1,13 @@
-package com.example.bigdatadream.service.impl;
+package com.example.bigdatadream.service.impl.transformation;
 
 import cn.hutool.json.JSONUtil;
 import com.example.bigdatadream.service.IProcessService;
+
+import com.example.bigdatadream.service.impl.BaseJob;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.springframework.stereotype.Service;
-import scala.xml.Null;
+import org.apache.spark.api.java.JavaSparkContext;
 
 import java.net.URL;
 import java.util.*;
@@ -33,48 +34,60 @@ import java.util.*;
  * mapPartitions要注意的问题
  * mapPartitions是针对每个分区进行处理的，若最后的结果想要得到一个全局范围内的，需要慎重考虑
  */
-@Service("DemoMapPartitionsService")
-public class DemoMapPartitionsService extends BaseJob implements IProcessService {
+@Service("DemoMapService")
+public class DemoMapService extends BaseJob implements IProcessService {
     @Override
     public void process() {
-        JavaSparkContext sc = initSpark("mapPartitions");
-        List<Integer> data = Arrays.asList(new Integer[]{1, 2, 3, 4,5,6,7});
-        JavaRDD<Integer> dataRdd1 = sc.parallelize(data,2);
-        JavaRDD<Integer> integerJavaRDD = dataRdd1.mapPartitions(n->{
-            List<Integer> rss = new ArrayList<>();
-            while (n.hasNext()) {
-                rss.add(n.next()*2);
-            }
-            return rss.iterator();
+        JavaSparkContext sc = initSpark("map");
+        List<Integer> data = Arrays.asList(new Integer[]{1, 2, 3, 4});
+        JavaRDD<Integer> dataRdd1 = sc.parallelize(data);
+        for (Integer m : dataRdd1.collect()) {
+            System.out.println(m);
+        }
+        //map 将处理的数据逐条进行映射转换，这里的转换可以是类型的转换，也可以是值的转换。
+        JavaRDD<Integer> dataRdd2 = dataRdd1.map(n -> {
+            return n * 2;
         });
-        System.out.println(integerJavaRDD.collect());//[2, 4, 6, 8, 10, 12, 14]
-
-        //只要第二个分区的数据
-        JavaRDD<Integer> integerJavaRDD2 = dataRdd1.mapPartitionsWithIndex((index,n)->{
-            List<Integer> rss = new ArrayList<>();
-            if(index==1){
-                while (n.hasNext()) {
-                    rss.add(n.next());
+        for (Integer m : dataRdd2.collect()) {
+            System.out.println(m);
+        }
+        JavaRDD<Integer> dataRdd3 = dataRdd2.map(n -> 3*n);
+        for (Integer m : dataRdd3.collect()) {
+            System.out.println(m);
+        }
+        JavaRDD<String> dataRdd4 = dataRdd3.map(n -> n+"");
+        for (String m : dataRdd4.collect()) {
+            System.out.println(m);
+        }
+        JavaRDD<String> dataRdd5 = dataRdd3.mapPartitions(new FlatMapFunction<Iterator<Integer>, String>() {
+            @Override
+            public Iterator<String> call(Iterator<Integer> iterator) throws Exception {
+                List<String> list = new ArrayList<>();
+                while(iterator.hasNext()){
+                    Integer name = iterator.next();
+                    list.add(name+"");
                 }
+                return list.iterator();
             }
-            return rss.iterator();
+        });
+        for (String m : dataRdd5.collect()) {
+            System.out.println(m);
+        }
+        URL resource = this.getClass().getClassLoader().getResource("data/apache.log");
+        String filePath=resource.getFile();
+        JavaRDD<String> fileRDD = sc.textFile(filePath);
 
-        },false);
-        System.out.println(integerJavaRDD2.collect());//[4, 5, 6, 7]
-
-        //打印数据分区号及元素
-        List<Integer> data2 = Arrays.asList(new Integer[]{1, 2, 3, 4,5,6,7,8,9});
-        JavaRDD<Integer> dataRdd2 = sc.parallelize(data2);//local[*]默认8个分区
-        JavaRDD<Map<Integer,Integer>> mapJavaRDD = dataRdd2.mapPartitionsWithIndex((index,n)->{
-            List<Map<Integer,Integer>> rss = new ArrayList<>();
-            while (n.hasNext()) {
-                Map<Integer,Integer> item=new HashMap<>();
-                item.put(index,n.next());
-                rss.add(item);
-            }
-            return rss.iterator();
-        },false);
-        System.out.println(mapJavaRDD.collect());//[{0=1}, {1=2}, {2=3}, {3=4}, {4=5}, {5=6}, {6=7}, {7=8}, {7=9}]
+        JavaRDD<Map<String, String>> map = fileRDD.map(n -> {
+            Map<String, String> item = new HashMap<>();
+            String[] s = n.split(" ");
+            item.put("ip", s[0]);
+            item.put("time", s[3]);
+            item.put("url", s[6]);
+            return item;
+        });
+        for (Map<String, String> m : map.collect()) {
+            System.out.println(JSONUtil.toJsonStr(m));
+        }
         stop(sc);
     }
 }
