@@ -29,12 +29,20 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoDistinctService demoDistinctService;
     @Autowired
     private DemoCoalesceService demoCoalesceService;
+    @Autowired
+    private DemoSortByService demoSortByService;
+    @Autowired
+    private DemoIntersectionService demoIntersectionService;
+    @Autowired
+    private DemoUnionService demoUnionService;
+    @Autowired
+    private DemoSubtractService demoSubtractService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
         //wordCountService.process();
         //demoMapService.process();
         //demoFlatMapService.process();
@@ -44,6 +52,10 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoSampleService.process();
         //demoDistinctService.process();
         //demoMapPartitionsService.process();
-        demoCoalesceService.process();
+        //demoCoalesceService.process();
+        //demoSortByService.process();
+        //demoIntersectionService.process();
+        demoUnionService.process();
+        demoSubtractService.process();
     }
 }
