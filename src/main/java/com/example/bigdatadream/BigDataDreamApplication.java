@@ -12,6 +12,10 @@ public class BigDataDreamApplication implements CommandLineRunner {
     @Autowired
     private WordCountService wordCountService;
     @Autowired
+    private DemoMapService demoMapService;
+    @Autowired
+    private DemoMapPartitionsService demoMapPartitionsService;
+    @Autowired
     private DemoFlatMapService demoFlatMapService;
     @Autowired
     private DemoGlomService demoGlomService;
@@ -30,11 +34,13 @@ public class BigDataDreamApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         //wordCountService.process();
+        //demoMapService.process();
         //demoFlatMapService.process();
         //demoGlomService.process();
         //demoGroupByService.process();
         //demoFilterService.process();
         //demoSampleService.process();
-        demoDistinctService.process();
+        //demoDistinctService.process();
+        demoMapPartitionsService.process();
     }
 }

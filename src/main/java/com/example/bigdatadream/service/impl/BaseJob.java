@@ -8,9 +8,9 @@ import org.apache.spark.api.java.JavaSparkContext;
 public abstract class BaseJob {
     public JavaSparkContext initSpark(String appName){
         SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName(appName);
-        JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+        JavaSparkContext sc = new JavaSparkContext(sparkConf);
         log.info("spark初始化成功");
-        return sparkContext;
+        return sc;
     }
     public void stop(JavaSparkContext context){
         if(context!=null){
