@@ -59,6 +59,8 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoLeftOuterJoinService demoLeftOuterJoinService;
     @Autowired
     private DemoCoGroupService demoCoGroupService;
+    @Autowired
+    private DemoSummaryService demoSummaryService;
 
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
@@ -90,6 +92,7 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoSortByKeyService.process();
         //demoJoinService.process();
         //demoLeftOuterJoinService.process();
-        demoCoGroupService.process();
+        //demoCoGroupService.process();
+        demoSummaryService.process();
     }
 }
