@@ -1,5 +1,6 @@
 package com.example.bigdatadream;
 
+import com.example.bigdatadream.service.impl.action.*;
 import com.example.bigdatadream.service.impl.transformation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -61,7 +62,28 @@ public class BigDataDreamApplication implements CommandLineRunner {
     private DemoCoGroupService demoCoGroupService;
     @Autowired
     private DemoSummaryService demoSummaryService;
-
+    @Autowired
+    private DemoReduceService demoReduceService;
+    @Autowired
+    private DemoCollectService demoCollectService;
+    @Autowired
+    private DemoCountService demoCountService;
+    @Autowired
+    private DemoFirstService demoFirstService;
+    @Autowired
+    private DemoTakeService demoTakeService;
+    @Autowired
+    private DemoTakeOrderedService demoTakeOrderedService;
+    @Autowired
+    private DemoAggregateService demoAggregateService;
+    @Autowired
+    private DemoFoldService demoFoldService;
+    @Autowired
+    private DemoCountByKeyService demoCountByKeyService;
+    @Autowired
+    private DemoSaveService demoSaveService;
+    @Autowired
+    private DemoForeachService demoForeachService;
     public static void main(String[] args) {
         SpringApplication.run(BigDataDreamApplication.class, args);
     }
@@ -93,6 +115,16 @@ public class BigDataDreamApplication implements CommandLineRunner {
         //demoJoinService.process();
         //demoLeftOuterJoinService.process();
         //demoCoGroupService.process();
-        demoSummaryService.process();
+        //demoSummaryService.process();
+        //demoReduceService.process();
+        //demoCollectService.process();
+        //demoCountService.process();
+        //demoFirstService.process();
+        //demoTakeService.process();
+        //demoTakeOrderedService.process();
+        //demoFoldService.process();
+        //demoCountByKeyService.process();
+        //demoSaveService.process();
+       demoForeachService.process();
     }
 }
